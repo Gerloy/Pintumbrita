@@ -9,6 +9,7 @@ let icon_guardar;
 let icon_borrar;
 let icon_deshacer;
 let icon_pincel;
+let mult;
 
 function preload(){
   icon_borrar = loadImage("data/borrador.png");
@@ -18,10 +19,17 @@ function preload(){
 }
 
 function setup() {
-	createCanvas(1280,720,P2D);
+	//createCanvas(1280,720,P2D);
   createCanvas(displayWidth, displayHeight,P2D);
-	dibujo = new Dibujo(width*0.5,height*0.45);
-	ui = new UI({'x':width*0.5, 'y':height*0.45},{'x':480, 'y':640});
+  if (displayWidth < 768){
+    mult = 0.5;
+    dibujo = new Dibujo(width*0.5,height*0.45);
+	  ui = new UI({'x':width*0.5, 'y':height*0.45},{'x':480*mult, 'y':640*mult});  
+  }else{
+    mult = 1;
+	  dibujo = new Dibujo(width*0.5,height*0.45);
+	  ui = new UI({'x':width*0.5, 'y':height*0.45},{'x':480*mult, 'y':640*mult});
+  }
 	rectMode(CENTER);
 	imageMode(CENTER);
 }
