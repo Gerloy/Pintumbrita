@@ -3,6 +3,8 @@ const COLORES = {'Verde':'#85993c', 'Azul':'#136491', 'Magenta':'#8c2b4c', 'Rojo
 const TAMS = [5,10,15,20,30];
 const BOTONES = ['Pincel', 'Goma', 'Atras', 'Guardar'];
 
+let touch = false;
+
 let ui;
 let dibujo;
 let icon_guardar;
@@ -79,6 +81,7 @@ function mousePressed(){
 
 function touchStarted(){
   if(dibujo.hover())dibujo.lineaSta();
+  touch = true;
 }
 
 
@@ -112,7 +115,10 @@ function mouseReleased(){
           dibujo.cambiarHerramienta('Goma');
         break;
         case 2:
-          dibujo.borrarLinea();
+          if (touch){
+            touch = false;
+            dibujo.borrarLinea();
+          }
         break;
         case 3:
           guardar();
@@ -126,6 +132,31 @@ function mouseReleased(){
 
 function touchReleased(){
   dibujo.mouseRel();
+  let config = ui.click();
+  for(key in config){
+    if (key == "Tam"){
+      dibujo.cambiarTam(TAMS[config[key]]);
+    }else if (key == "Boton"){
+      switch(config["Boton"]){
+        case 0:
+          dibujo.cambiarHerramienta('Pincel');
+        break;
+        case 1:
+          dibujo.cambiarHerramienta('Goma');
+        break;
+        case 2:
+          print(touch);
+          dibujo.borrarLinea();
+        break;
+        case 3:
+          guardar();
+        break;
+      }
+    }else if (key == "Color"){
+      dibujo.cambiarColor(config["Color"]);
+    }
+  }
+  touch = false;
 }
 
 
