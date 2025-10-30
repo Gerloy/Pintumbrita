@@ -161,5 +161,6 @@ function touchReleased(){
 
 
 function guardar(){
-  save(dibujo.buffer,'Dibujo_'+frameCount+'.png');
+  dibujo.buffer.save('Dibujo_'+frameCount);
+  //save(dibujo.buffer,'Dibujo_'+frameCount+'.png');
 }
